@@ -42,34 +42,38 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
   } else {
     return (
       <div className={styles.canvas}>
-        {componentList.map((item) => {
-          const { fe_id } = item;
+        {componentList
+          .filter((item) => {
+            return item.isHidden !== true;
+          })
+          .map((item) => {
+            const { fe_id } = item;
 
-          // const wrapperDefaultClassName = styles["component-wrapper"];
-          // const selectedClassName = styles.selected;
-          // const wrapperClassName = classNames({
-          //   [wrapperDefaultClassName]: true,
-          //   [selectedClassName]: fe_id === selectedId,
-          // });
+            // const wrapperDefaultClassName = styles["component-wrapper"];
+            // const selectedClassName = styles.selected;
+            // const wrapperClassName = classNames({
+            //   [wrapperDefaultClassName]: true,
+            //   [selectedClassName]: fe_id === selectedId,
+            // });
 
-          return (
-            <div
-              key={fe_id}
-              className={
-                selectedId === fe_id
-                  ? `${styles["component-wrapper"]} ${styles.selected}`
-                  : styles["component-wrapper"]
-              }
-              onClick={(event) => {
-                handleClick(event, fe_id);
-              }}
-            >
-              <div className={styles.blockEvents}>
-                {generateComponent(item)}
+            return (
+              <div
+                key={fe_id}
+                className={
+                  selectedId === fe_id
+                    ? `${styles["component-wrapper"]} ${styles.selected}`
+                    : styles["component-wrapper"]
+                }
+                onClick={(event) => {
+                  handleClick(event, fe_id);
+                }}
+              >
+                <div className={styles.blockEvents}>
+                  {generateComponent(item)}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
         {/* <div className={styles["component-wrapper"]}>
           <div className={styles.blockEvents}>
             <QuestionTitle />

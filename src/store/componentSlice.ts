@@ -6,6 +6,7 @@ export type ComponentInfoType = {
   fe_id: string;
   type: string;
   title: string;
+  isHidden?: boolean;
   props: ComponentPropsType;
 };
 
@@ -76,6 +77,24 @@ export const componentSlice = createSlice({
         nextIndex === -1 ? "" : state.componentList[nextIndex].fe_id;
       state.componentList.splice(index, 1);
     },
+    changeComponentHidden: (
+      state: ComponentStateType,
+      actions: PayloadAction<{ id: string; isHidden: boolean }>
+    ) => {
+      const { componentList } = state;
+      const { id, isHidden } = actions.payload;
+      const curComponent = componentList.find((item) => item.fe_id === id);
+      if (curComponent) {
+        curComponent.isHidden = isHidden;
+      }
+      if (!id) return;
+      const index = state.componentList.findIndex((item) => item.fe_id === id);
+      if (index === -1) return;
+      const nextIndex =
+        index === state.componentList.length - 1 ? -1 : index + 1;
+      state.selectedId =
+        nextIndex === -1 ? "" : state.componentList[nextIndex].fe_id;
+    },
 
     // changeSelectedId: (
     //   state: ComponentStateType,
@@ -92,6 +111,7 @@ export const {
   addComponent,
   changeComponentProp,
   removeSelectedComponent,
+  changeComponentHidden,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;
