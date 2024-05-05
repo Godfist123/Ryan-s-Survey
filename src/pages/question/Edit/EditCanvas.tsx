@@ -33,6 +33,21 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
     dispatch(changeSelectedId(id));
   };
 
+  const generateClass = (
+    id: string,
+    selectedId: string,
+    item: ComponentInfoType
+  ) => {
+    let className = styles["component-wrapper"];
+    if (id === selectedId) {
+      className = className.concat(` ${styles.selected}`);
+    }
+    if (item.isLocked) {
+      className = className.concat(` ${styles.locked}`);
+    }
+    return className;
+  };
+
   if (loading) {
     return (
       <div style={{ textAlign: "center", marginTop: "24px" }}>
@@ -59,11 +74,7 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
             return (
               <div
                 key={fe_id}
-                className={
-                  selectedId === fe_id
-                    ? `${styles["component-wrapper"]} ${styles.selected}`
-                    : styles["component-wrapper"]
-                }
+                className={generateClass(fe_id, selectedId, item)}
                 onClick={(event) => {
                   handleClick(event, fe_id);
                 }}

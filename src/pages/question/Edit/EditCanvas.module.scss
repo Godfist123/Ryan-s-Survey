@@ -18,6 +18,11 @@
   pointer-events: none; //block click event
 }
 
+.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .selected {
   border-color: #1890ff !important;
 }

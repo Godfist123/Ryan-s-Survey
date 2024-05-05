@@ -1,10 +1,15 @@
-import { DeleteOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EyeInvisibleOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
   changeComponentHidden,
   removeSelectedComponent,
+  toggleComponentLocked,
 } from "../../../store/componentSlice";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
@@ -15,6 +20,7 @@ interface EditToolbarProps {
 const EditToolbar: React.FC<EditToolbarProps> = (props) => {
   const dispatch = useDispatch();
   const { selectedId, selectedComponent } = useGetComponentInfo();
+  const isLocked = selectedComponent?.isLocked;
 
   const handleToolBar = (action: string) => {
     switch (action) {
@@ -22,10 +28,11 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
         dispatch(removeSelectedComponent());
         break;
       case "Hide":
-        const flag = selectedComponent?.isHidden;
-
-        dispatch(changeComponentHidden({ id: selectedId, isHidden: !flag }));
-        console.log("flag", !flag);
+        dispatch(changeComponentHidden({ id: selectedId, isHidden: true }));
+        break;
+      case "Lock":
+        dispatch(toggleComponentLocked({ id: selectedId }));
+        break;
     }
   };
   return (
@@ -42,6 +49,14 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
           shape="circle"
           icon={<EyeInvisibleOutlined />}
           onClick={() => handleToolBar("Hide")}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Lock">
+        <Button
+          shape="circle"
+          icon={<LockOutlined />}
+          onClick={() => handleToolBar("Lock")}
+          type={isLocked ? "primary" : "default"}
         ></Button>
       </Tooltip>
     </Space>

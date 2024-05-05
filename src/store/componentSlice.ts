@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../components/QuestionComponents";
 import { produce } from "immer";
 import { stringify } from "querystring";
+import { stateType } from "./store";
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
   title: string;
   isHidden?: boolean;
+  isLocked?: boolean;
   props: ComponentPropsType;
 };
 
@@ -95,6 +97,18 @@ export const componentSlice = createSlice({
       state.selectedId =
         nextIndex === -1 ? "" : state.componentList[nextIndex].fe_id;
     },
+    toggleComponentLocked: (
+      state: ComponentStateType,
+      actions: PayloadAction<{ id: string }>
+    ) => {
+      const { selectedId, componentList } = state;
+      const curComponent = componentList.find((item) => {
+        return item.fe_id === actions.payload.id;
+      });
+      if (curComponent) {
+        curComponent.isLocked = !curComponent.isLocked;
+      }
+    },
 
     // changeSelectedId: (
     //   state: ComponentStateType,
@@ -112,6 +126,7 @@ export const {
   changeComponentProp,
   removeSelectedComponent,
   changeComponentHidden,
+  toggleComponentLocked,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;
