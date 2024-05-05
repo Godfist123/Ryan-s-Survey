@@ -18,7 +18,7 @@ const ComponentProp: React.FC<ComponentPropProps> = (props) => {
   if (selectedComponent == null)
     return <div style={{ textAlign: "center" }}>Empty</div>;
 
-  const { type, props: prop } = selectedComponent;
+  const { type, props: prop, isLocked } = selectedComponent;
   const componentConfig = getComponentConfByType(type);
   if (componentConfig == null)
     return <div style={{ textAlign: "center" }}>Empty</div>;
@@ -32,7 +32,7 @@ const ComponentProp: React.FC<ComponentPropProps> = (props) => {
 
   return (
     <div>
-      <PropComponent {...prop} onChange={changeProps} />
+      <PropComponent {...prop} onChange={changeProps} disabled={isLocked} />
     </div>
   );
 };

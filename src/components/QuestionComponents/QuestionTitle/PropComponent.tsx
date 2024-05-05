@@ -8,7 +8,7 @@ interface PropComponentProps {
 }
 
 const PropComponent: React.FC<QuestionTitlePropsType> = (props) => {
-  const { text, level, isCenter, onChange } = props;
+  const { text, level, isCenter, onChange, disabled } = props;
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const PropComponent: React.FC<QuestionTitlePropsType> = (props) => {
         initialValues={{ text, level, isCenter }}
         form={form}
         onValuesChange={handleChange}
+        disabled={disabled}
       >
         <FormItem
           label="Text"
