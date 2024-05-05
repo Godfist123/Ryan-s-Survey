@@ -1,4 +1,6 @@
 import {
+  BlockOutlined,
+  CopyOutlined,
   DeleteOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
@@ -8,8 +10,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import {
   changeComponentHidden,
+  copySelectedComponent,
   removeSelectedComponent,
   toggleComponentLocked,
+  pasteCopiedComponent,
 } from "../../../store/componentSlice";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
@@ -19,7 +23,8 @@ interface EditToolbarProps {
 
 const EditToolbar: React.FC<EditToolbarProps> = (props) => {
   const dispatch = useDispatch();
-  const { selectedId, selectedComponent } = useGetComponentInfo();
+  const { selectedId, selectedComponent, copiedComponent } =
+    useGetComponentInfo();
   const isLocked = selectedComponent?.isLocked;
 
   const handleToolBar = (action: string) => {
@@ -33,6 +38,11 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
       case "Lock":
         dispatch(toggleComponentLocked({ id: selectedId }));
         break;
+      case "Duplicate":
+        dispatch(copySelectedComponent());
+        break;
+      case "Paste":
+        dispatch(pasteCopiedComponent());
     }
   };
   return (
@@ -57,6 +67,21 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
           icon={<LockOutlined />}
           onClick={() => handleToolBar("Lock")}
           type={isLocked ? "primary" : "default"}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Duplicate">
+        <Button
+          shape="circle"
+          icon={<CopyOutlined />}
+          onClick={() => handleToolBar("Duplicate")}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Paste">
+        <Button
+          shape="circle"
+          icon={<BlockOutlined />}
+          onClick={() => handleToolBar("Paste")}
+          disabled={copiedComponent === null ? true : false}
         ></Button>
       </Tooltip>
     </Space>

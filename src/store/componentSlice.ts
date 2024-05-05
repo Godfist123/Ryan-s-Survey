@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../components/QuestionComponents";
 import { produce } from "immer";
-import { stringify } from "querystring";
-import { stateType } from "./store";
+import cloneDeep from "lodash.clonedeep";
+
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
@@ -15,11 +15,13 @@ export type ComponentInfoType = {
 export type ComponentStateType = {
   componentList: ComponentInfoType[];
   selectedId: string;
+  copiedComponent: ComponentInfoType | null;
 };
 
 const INIT_STATE: ComponentStateType = {
   componentList: [],
   selectedId: "",
+  copiedComponent: null,
 };
 
 export const componentSlice = createSlice({
@@ -109,7 +111,27 @@ export const componentSlice = createSlice({
         curComponent.isLocked = !curComponent.isLocked;
       }
     },
-
+    copySelectedComponent: (state: ComponentStateType) => {
+      const { selectedId, componentList } = state;
+      const selectedComponent = componentList.find((item) => {
+        return item.fe_id === selectedId;
+      });
+      if (selectedComponent) {
+        state.copiedComponent = cloneDeep(selectedComponent);
+      }
+    },
+    pasteCopiedComponent: (state: ComponentStateType) => {
+      const { componentList, selectedId, copiedComponent } = state;
+      if (copiedComponent) {
+        copiedComponent.fe_id = nanoid();
+        const index = componentList.findIndex(
+          (item) => item.fe_id === selectedId
+        );
+        componentList.splice(index + 1, 0, copiedComponent);
+        state.selectedId = copiedComponent.fe_id;
+        state.copiedComponent = null;
+      }
+    },
     // changeSelectedId: (
     //   state: ComponentStateType,
     //   actions: PayloadAction<string>
@@ -127,6 +149,8 @@ export const {
   removeSelectedComponent,
   changeComponentHidden,
   toggleComponentLocked,
+  copySelectedComponent,
+  pasteCopiedComponent,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;
