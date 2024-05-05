@@ -12,6 +12,7 @@ import {
 } from "../../../store/componentSlice";
 import { getComponentConfByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
+import useBindCanvasPress from "../../../hooks/useBindCanvasKeyPress";
 interface EditCanvasProps {
   loading: boolean;
 }
@@ -27,6 +28,7 @@ function generateComponent(ComponentInfo: ComponentInfoType) {
 const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
   const dispatch = useDispatch();
   const { componentList, selectedId } = useGetComponentInfo();
+  useBindCanvasPress();
 
   const handleClick = (event: MouseEvent, id: string) => {
     event.stopPropagation();
