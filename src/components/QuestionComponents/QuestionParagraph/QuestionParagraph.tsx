@@ -11,12 +11,19 @@ const QuestionParagraph: React.FC<QuestionParagraphPropsType> = (props) => {
     ...QuestionParagraphDefaultProps,
     ...props,
   };
+  //based on html's newline symbol generate an array
+  const textList = text.split("\n");
 
   return (
     <Paragraph
       style={{ textAlign: isCenter ? "center" : "start", marginBottom: "0" }}
     >
-      {text}
+      {textList.map((item, index) => (
+        <span key={index}>
+          {index > 0 && <br />}
+          {item}
+        </span>
+      ))}
     </Paragraph>
   );
 };
