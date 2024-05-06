@@ -40,24 +40,22 @@ export const componentSlice = createSlice({
     ) => {
       state.selectedId = actions.payload;
     },
-    addComponent: produce(
-      (
-        draft: ComponentStateType,
-        actions: PayloadAction<ComponentInfoType>
-      ) => {
-        const { selectedId, componentList } = draft;
-        const index = componentList.findIndex(
-          (item) => item.fe_id === selectedId
-        );
-        if (index < 0) {
-          //empty list which means the canvas is empty
-          draft.componentList.push(actions.payload);
-        } else {
-          draft.componentList.splice(index + 1, 0, actions.payload);
-        }
-        draft.selectedId = actions.payload.fe_id;
+    addComponent: (
+      state: ComponentStateType,
+      actions: PayloadAction<ComponentInfoType>
+    ) => {
+      const { selectedId, componentList } = state;
+      const index = componentList.findIndex(
+        (item) => item.fe_id === selectedId
+      );
+      if (index < 0) {
+        //empty list which means the canvas is empty
+        state.componentList.push(actions.payload);
+      } else {
+        state.componentList.splice(index + 1, 0, actions.payload);
       }
-    ),
+      state.selectedId = actions.payload.fe_id;
+    },
     changeComponentProp: (
       state: ComponentStateType,
       actions: PayloadAction<{ id: string; newProps: ComponentPropsType }>
@@ -132,13 +130,29 @@ export const componentSlice = createSlice({
         state.copiedComponent = null;
       }
     },
-    // changeSelectedId: (
-    //   state: ComponentStateType,
-    //   actions: PayloadAction<string>
-    // ) => {
-    //   return { ...state, selectedId: actions.payload };
-    // },
+    keyboardUpArrow: (state: ComponentStateType) => {
+      const { selectedId, componentList } = state;
+      const index = componentList.findIndex((item) => {
+        return item.fe_id === selectedId;
+      });
+      if (index <= 0) return;
+      state.selectedId = componentList[index - 1].fe_id;
+    },
+    keyboardDownArrow: (state: ComponentStateType) => {
+      const { selectedId, componentList } = state;
+      const index = componentList.findIndex((item) => {
+        return item.fe_id === selectedId;
+      });
+      if (index < 0 || index === componentList.length - 1) return;
+      state.selectedId = componentList[index + 1].fe_id;
+    },
   },
+  // changeSelectedId: (
+  //   state: ComponentStateType,
+  //   actions: PayloadAction<string>
+  // ) => {
+  //   return { ...state, selectedId: actions.payload };
+  // },
 });
 
 export const {
@@ -151,6 +165,8 @@ export const {
   toggleComponentLocked,
   copySelectedComponent,
   pasteCopiedComponent,
+  keyboardUpArrow,
+  keyboardDownArrow,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;

@@ -2,8 +2,10 @@ import { useKeyPress } from "ahooks";
 import { useDispatch } from "react-redux";
 import {
   copySelectedComponent,
+  keyboardUpArrow,
   pasteCopiedComponent,
   removeSelectedComponent,
+  keyboardDownArrow,
 } from "../store/componentSlice";
 
 //determine where the cursor was aiming at
@@ -28,6 +30,16 @@ const useBindCanvasPress = () => {
   useKeyPress(["ctrl.v", "meta.v"], () => {
     if (isActiveElementValid()) {
       dispatch(pasteCopiedComponent());
+    }
+  });
+  useKeyPress(["uparrow"], () => {
+    if (isActiveElementValid()) {
+      dispatch(keyboardUpArrow());
+    }
+  });
+  useKeyPress(["downarrow"], () => {
+    if (isActiveElementValid()) {
+      dispatch(keyboardDownArrow());
     }
   });
 };
