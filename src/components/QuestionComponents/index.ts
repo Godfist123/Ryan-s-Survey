@@ -1,12 +1,16 @@
 import QuestionInputConfig, { QuestionInputPropsType } from "./QuestionInput";
+import QuestionParagraphConfig, {
+  QuestionParagraphPropsType,
+} from "./QuestionParagraph";
 import QuestionTitleConfig, { QuestionTitlePropsType } from "./QuestionTitle";
 import type { FC } from "react";
 
-// unified process component propType
+// unified handle component propType
 export type ComponentPropsType = QuestionInputPropsType &
-  QuestionTitlePropsType;
+  QuestionTitlePropsType &
+  QuestionParagraphPropsType;
 
-// unified process component config Type
+// unified handle component config Type
 export type ComponentConfType = {
   title: string;
   type: string;
@@ -18,13 +22,14 @@ export type ComponentConfType = {
 const componentConfList: ComponentConfType[] = [
   QuestionInputConfig,
   QuestionTitleConfig,
+  QuestionParagraphConfig,
 ];
 
 export const componentConfGroup = [
   {
     groupId: "textGroup",
     groupname: "Text",
-    components: [QuestionTitleConfig],
+    components: [QuestionTitleConfig, QuestionParagraphConfig],
   },
   {
     groupId: "inputGroup",
