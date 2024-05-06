@@ -11,7 +11,7 @@ const QuestionParagraph: React.FC<QuestionParagraphPropsType> = (props) => {
     ...QuestionParagraphDefaultProps,
     ...props,
   };
-  //based on html's newline symbol generate an array
+  //based on String's newline symbol generate an array
   const textList = text.split("\n");
 
   return (
