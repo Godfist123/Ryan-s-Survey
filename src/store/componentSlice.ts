@@ -51,10 +51,11 @@ export const componentSlice = createSlice({
       if (index < 0) {
         //empty list which means the canvas is empty
         state.componentList.push(actions.payload);
+        state.selectedId = actions.payload.fe_id;
       } else {
         state.componentList.splice(index + 1, 0, actions.payload);
+        state.selectedId = actions.payload.fe_id;
       }
-      state.selectedId = actions.payload.fe_id;
     },
     changeComponentProp: (
       state: ComponentStateType,
