@@ -30,13 +30,13 @@ const PropComponent: React.FC<QuestionTitlePropsType> = (props) => {
         onValuesChange={handleChange}
         disabled={disabled}
       >
-        <FormItem
+        <Form.Item
           label="Text"
           name="text"
           rules={[{ required: true, message: "Please enter text" }]}
         >
           <Input />
-        </FormItem>
+        </Form.Item>
         <Form.Item label="Level" name="level">
           <Select
             options={[

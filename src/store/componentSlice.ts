@@ -147,6 +147,17 @@ export const componentSlice = createSlice({
       if (index < 0 || index === componentList.length - 1) return;
       state.selectedId = componentList[index + 1].fe_id;
     },
+    modifyTitle: (
+      state: ComponentStateType,
+      actions: PayloadAction<{ id: string; newTitle: string }>
+    ) => {
+      const unModifiedItem = state.componentList.find((item) => {
+        return item.fe_id === actions.payload.id;
+      });
+      if (unModifiedItem) {
+        unModifiedItem.title = actions.payload.newTitle;
+      }
+    },
   },
   // changeSelectedId: (
   //   state: ComponentStateType,
@@ -168,6 +179,7 @@ export const {
   pasteCopiedComponent,
   keyboardUpArrow,
   keyboardDownArrow,
+  modifyTitle,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;

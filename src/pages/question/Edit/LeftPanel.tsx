@@ -2,6 +2,7 @@ import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
 import React from "react";
 import ComponentLib from "./ComponentLib";
+import Layers from "./Layers";
 
 interface LeftPanelProps {
   // Define your props here
@@ -31,7 +32,11 @@ const LeftPanel: React.FC<LeftPanelProps> = (props) => {
           Layers
         </span>
       ),
-      children: <div>Layers</div>,
+      children: (
+        <div>
+          <Layers />
+        </div>
+      ),
     },
   ];
   return (
