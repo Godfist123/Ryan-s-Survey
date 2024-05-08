@@ -2,7 +2,11 @@ import React, { FC, useState, ChangeEvent } from "react";
 import { message, Input, Button, Space } from "antd";
 import { useDispatch } from "react-redux";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
-import { modifyTitle } from "../../../store/componentSlice";
+import {
+  changeComponentHidden,
+  modifyTitle,
+  toggleComponentLocked,
+} from "../../../store/componentSlice";
 import { changeSelectedId } from "../../../store/componentSlice";
 import styles from "./Layer.module.scss";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
@@ -29,6 +33,14 @@ const Layers: FC = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>, id: string) => {
     const newTitle = event.target.value.trim();
     dispatch(modifyTitle({ id, newTitle }));
+  };
+
+  const handleHideChange = (id: string, isHidden: boolean | undefined) => {
+    dispatch(changeComponentHidden({ id, isHidden: !isHidden }));
+  };
+
+  const handleLockChange = (id: string) => {
+    dispatch(toggleComponentLocked({ id }));
   };
 
   const generateClass = (id: string, selectedId: string) => {
@@ -69,6 +81,7 @@ const Layers: FC = () => {
                   className={!isHidden ? styles.btn : ""}
                   icon={<EyeInvisibleOutlined />}
                   type={isHidden ? "primary" : "text"}
+                  onClick={() => handleHideChange(fe_id, isHidden)}
                 />
                 <Button
                   size="small"
@@ -76,6 +89,7 @@ const Layers: FC = () => {
                   className={!isHidden ? styles.btn : ""}
                   icon={<LockOutlined />}
                   type={isHidden ? "primary" : "text"}
+                  onClick={() => handleLockChange(fe_id)}
                 />
               </Space>
             </div>
