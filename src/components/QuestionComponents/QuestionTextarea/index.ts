@@ -7,7 +7,7 @@ export * from "./interface";
 
 export default {
   title: "TextArea",
-  type: "textArea",
+  type: "TextArea",
   PropComponent: PropComponent,
   Component: QuestionTextarea,
   defaultProps: QuestionTextareaDefaultProps,

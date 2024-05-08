@@ -7,6 +7,7 @@ import QuestionInfoConfig, { QuestionInfoPropsType } from "./QuestionInfo";
 import QuestionTextareaConfig, {
   QuestionTextareaPropsType,
 } from "./QuestionTextarea";
+import QuestionRadioConfig, { QuestionRadioPropsType } from "./QuestionRadio";
 import type { FC } from "react";
 
 // unified handle component propType
@@ -14,7 +15,8 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionTitlePropsType &
   QuestionParagraphPropsType &
   QuestionInfoPropsType &
-  QuestionTextareaPropsType;
+  QuestionTextareaPropsType &
+  QuestionRadioPropsType;
 
 // unified handle component config Type
 export type ComponentConfType = {
@@ -31,6 +33,7 @@ const componentConfList: ComponentConfType[] = [
   QuestionParagraphConfig,
   QuestionInfoConfig,
   QuestionTextareaConfig,
+  QuestionRadioConfig,
 ];
 
 export const componentConfGroup = [
@@ -47,6 +50,11 @@ export const componentConfGroup = [
     groupId: "inputGroup",
     groupname: "Input",
     components: [QuestionInputConfig, QuestionTextareaConfig],
+  },
+  {
+    groupId: "selectionGroup",
+    groupname: "Selection",
+    components: [QuestionRadioConfig],
   },
 ];
 

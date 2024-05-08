@@ -6,7 +6,7 @@ export * from "./interface";
 
 export default {
   title: "QuestionInfo",
-  type: "questionInfo",
+  type: "QuestionInfo",
   PropComponent,
   Component: QuestionInfo,
   defaultProps: QuestionInfoDefaultProps,
