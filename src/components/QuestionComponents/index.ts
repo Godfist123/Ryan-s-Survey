@@ -4,13 +4,17 @@ import QuestionParagraphConfig, {
 } from "./QuestionParagraph";
 import QuestionTitleConfig, { QuestionTitlePropsType } from "./QuestionTitle";
 import QuestionInfoConfig, { QuestionInfoPropsType } from "./QuestionInfo";
+import QuestionTextareaConfig, {
+  QuestionTextareaPropsType,
+} from "./QuestionTextarea";
 import type { FC } from "react";
 
 // unified handle component propType
 export type ComponentPropsType = QuestionInputPropsType &
   QuestionTitlePropsType &
   QuestionParagraphPropsType &
-  QuestionInfoPropsType;
+  QuestionInfoPropsType &
+  QuestionTextareaPropsType;
 
 // unified handle component config Type
 export type ComponentConfType = {
@@ -26,6 +30,7 @@ const componentConfList: ComponentConfType[] = [
   QuestionTitleConfig,
   QuestionParagraphConfig,
   QuestionInfoConfig,
+  QuestionTextareaConfig,
 ];
 
 export const componentConfGroup = [
@@ -41,7 +46,7 @@ export const componentConfGroup = [
   {
     groupId: "inputGroup",
     groupname: "Input",
-    components: [QuestionInputConfig],
+    components: [QuestionInputConfig, QuestionTextareaConfig],
   },
 ];
 
