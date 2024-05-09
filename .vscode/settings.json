@@ -9,5 +9,8 @@
         "scorll",
         "setloading",
         "uparrow"
+    ],
+    "cSpell.enableFiletypes": [
+        "typescript"
     ]
 }
