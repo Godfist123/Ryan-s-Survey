@@ -3,7 +3,7 @@ import { stateType } from "../store/store";
 import { ComponentStateType } from "../store/componentSlice";
 const useGetComponentInfo = () => {
   const data = useSelector<stateType>(
-    (state) => state.componentSlice
+    (state) => state.componentSlice.present
   ) as ComponentStateType;
   const { componentList, selectedId, copiedComponent } = data;
   const selectedComponent = componentList.find((item) => {

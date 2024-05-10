@@ -1,5 +1,6 @@
 import { useKeyPress } from "ahooks";
 import { useDispatch } from "react-redux";
+import { ActionCreators } from "redux-undo";
 import {
   copySelectedComponent,
   keyboardUpArrow,
@@ -12,7 +13,8 @@ import {
 const isActiveElementValid = () => {
   const activeElem = document.activeElement;
   if (activeElem === document.body) return true; //cursor is not aiming at input
-  if (activeElem?.matches("div[role=button]")) return true;
+  if (activeElem?.matches("div[role=button]")) return true; //After wrapping component with SortableItem.tsx,
+  //the whole div is a button
   return false;
 };
 
@@ -43,6 +45,24 @@ const useBindCanvasPress = () => {
       dispatch(keyboardDownArrow());
     }
   });
+  useKeyPress(
+    ["ctrl.z", "meta.z"],
+    () => {
+      if (isActiveElementValid()) {
+        dispatch(ActionCreators.undo());
+      }
+    },
+    { exactMatch: true }
+  );
+  useKeyPress(
+    ["ctrl.shift.z", "meta.shift.z"],
+    () => {
+      if (isActiveElementValid()) {
+        dispatch(ActionCreators.redo());
+      }
+    },
+    { exactMatch: true }
+  );
 };
 
 export default useBindCanvasPress;

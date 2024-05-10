@@ -9,6 +9,7 @@
         "Popconfirm",
         "scorll",
         "setloading",
+        "undoable",
         "uparrow"
     ],
     "cSpell.enableFiletypes": [

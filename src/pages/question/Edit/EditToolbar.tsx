@@ -5,6 +5,8 @@ import {
   DownCircleOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
+  RedoOutlined,
+  UndoOutlined,
   UpCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Space, Tooltip, message } from "antd";
@@ -20,6 +22,7 @@ import {
   toolBarDown,
 } from "../../../store/componentSlice";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
+import { ActionCreators } from "redux-undo";
 
 interface EditToolbarProps {
   // Define your props here
@@ -61,6 +64,12 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
           break;
         }
         dispatch(toolBarDown());
+        break;
+      case "Undo":
+        dispatch(ActionCreators.undo());
+        break;
+      case "Redo":
+        dispatch(ActionCreators.redo());
         break;
     }
   };
@@ -115,6 +124,20 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
           shape="circle"
           icon={<DownCircleOutlined />}
           onClick={() => handleToolBar("Down")}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Undo">
+        <Button
+          shape="circle"
+          icon={<UndoOutlined />}
+          onClick={() => handleToolBar("Undo")}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Redo">
+        <Button
+          shape="circle"
+          icon={<RedoOutlined />}
+          onClick={() => handleToolBar("Redo")}
         ></Button>
       </Tooltip>
     </Space>
