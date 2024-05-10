@@ -1,13 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "./EditHeader.module.scss";
 import { Button, Input, Space, Typography } from "antd";
-import { EditOutlined, LeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { EditOutlined, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
+import { useNavigate, useParams } from "react-router-dom";
 import EditToolbar from "./EditToolbar";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
 import { useDispatch } from "react-redux";
 import { setTitle } from "../../../store/pageinfoSlice";
 import { changeSelectedId } from "../../../store/componentSlice";
+import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
+import { useDebounceEffect, useKeyPress, useRequest } from "ahooks";
+import { updateQuestionService } from "../../../services/question";
 interface EditHeaderProps {
   // Define your props here
 }
@@ -25,8 +28,6 @@ const TitleElem: React.FC = () => {
     const newTitle = e.target.value;
     dispatch(setTitle({ title: newTitle }));
   };
-
-  useEffect(() => {});
 
   return (
     <>
@@ -51,6 +52,44 @@ const TitleElem: React.FC = () => {
         </Space>
       )}
     </>
+  );
+};
+
+const SaveBtn: React.FC = () => {
+  const pageInfo = useGetPageInfo();
+  const { id } = useParams();
+  const { componentList } = useGetComponentInfo();
+
+  const load = async () => {
+    if (!id) return;
+    await updateQuestionService(id, { ...pageInfo, componentList });
+  };
+
+  const { run, loading } = useRequest(load, { manual: true });
+
+  useKeyPress(["ctrl.s", "meta.s"], (event: KeyboardEvent) => {
+    event.preventDefault();
+    if (loading) return;
+    run();
+  });
+
+  useDebounceEffect(
+    () => {
+      run();
+    },
+    [pageInfo, componentList],
+    {
+      wait: 1000,
+    }
+  );
+  return (
+    <Button
+      onClick={run}
+      disabled={loading}
+      icon={loading ? <LoadingOutlined /> : null}
+    >
+      Save
+    </Button>
   );
 };
 
@@ -80,7 +119,7 @@ const EditHeader: React.FC<EditHeaderProps> = (props) => {
         </div>
         <div className={styles.right}>
           <Space>
-            <Button>Save</Button>
+            <SaveBtn />
             <Button type="primary">Publish</Button>
           </Space>
         </div>
