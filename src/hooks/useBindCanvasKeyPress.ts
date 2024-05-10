@@ -12,6 +12,7 @@ import {
 const isActiveElementValid = () => {
   const activeElem = document.activeElement;
   if (activeElem === document.body) return true; //cursor is not aiming at input
+  if (activeElem?.matches("div[role=button]")) return true;
   return false;
 };
 

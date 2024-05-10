@@ -166,6 +166,24 @@ export const componentSlice = createSlice({
       const { oldIndex, newIndex } = actions.payload;
       state.componentList = arrayMove(currComponentList, oldIndex, newIndex);
     },
+    toolBarUp: (state: ComponentStateType) => {
+      const { selectedId, componentList } = state;
+      if (!selectedId) return;
+      const currIndex = componentList.findIndex((item) => {
+        return item.fe_id === selectedId;
+      });
+      if (currIndex === 0) return;
+      state.componentList = arrayMove(componentList, currIndex, currIndex - 1);
+    },
+    toolBarDown: (state: ComponentStateType) => {
+      const { selectedId, componentList } = state;
+      if (!selectedId) return;
+      const currIndex = componentList.findIndex((item) => {
+        return item.fe_id === selectedId;
+      });
+      if (currIndex === componentList.length - 1) return;
+      state.componentList = arrayMove(componentList, currIndex, currIndex + 1);
+    },
   },
   // changeSelectedId: (
   //   state: ComponentStateType,
@@ -189,6 +207,8 @@ export const {
   keyboardDownArrow,
   modifyTitle,
   moveComponent,
+  toolBarUp,
+  toolBarDown,
 } = componentSlice.actions;
 const componentSliceReducers = componentSlice.reducer;
 export default componentSliceReducers;

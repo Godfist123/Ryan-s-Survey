@@ -2,10 +2,12 @@ import {
   BlockOutlined,
   CopyOutlined,
   DeleteOutlined,
+  DownCircleOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
+  UpCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Space, Tooltip } from "antd";
+import { Button, Space, Tooltip, message } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -14,6 +16,8 @@ import {
   removeSelectedComponent,
   toggleComponentLocked,
   pasteCopiedComponent,
+  toolBarUp,
+  toolBarDown,
 } from "../../../store/componentSlice";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
@@ -43,6 +47,21 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
         break;
       case "Paste":
         dispatch(pasteCopiedComponent());
+        break;
+      case "Up":
+        if (!selectedId) {
+          message.warning("Please select a Component", 1);
+          break;
+        }
+        dispatch(toolBarUp());
+        break;
+      case "Down":
+        if (!selectedId) {
+          message.warning("Please select a Component", 1);
+          break;
+        }
+        dispatch(toolBarDown());
+        break;
     }
   };
   return (
@@ -82,6 +101,20 @@ const EditToolbar: React.FC<EditToolbarProps> = (props) => {
           icon={<BlockOutlined />}
           onClick={() => handleToolBar("Paste")}
           disabled={copiedComponent === null ? true : false}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Up">
+        <Button
+          shape="circle"
+          icon={<UpCircleOutlined />}
+          onClick={() => handleToolBar("Up")}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="Down">
+        <Button
+          shape="circle"
+          icon={<DownCircleOutlined />}
+          onClick={() => handleToolBar("Down")}
         ></Button>
       </Tooltip>
     </Space>
