@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "./EditHeader.module.scss";
-import { Button, Input, Space, Typography } from "antd";
+import { Button, Input, Space, Typography, message } from "antd";
 import { EditOutlined, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import EditToolbar from "./EditToolbar";
@@ -93,6 +93,35 @@ const SaveBtn: React.FC = () => {
   );
 };
 
+const PublishBtn: React.FC = () => {
+  const Navi = useNavigate();
+  const pageInfo = useGetPageInfo();
+  const { id } = useParams();
+  const { componentList } = useGetComponentInfo();
+
+  const load = async () => {
+    if (!id) return;
+    await updateQuestionService(id, {
+      ...pageInfo,
+      componentList,
+      isPublished: true,
+    });
+  };
+
+  const { run, loading } = useRequest(load, {
+    manual: true,
+    onSuccess: () => {
+      message.success("Successfully Published");
+      Navi(`/question/stat/${id}`);
+    },
+  });
+  return (
+    <Button type="primary" onClick={run} disabled={loading}>
+      Publish
+    </Button>
+  );
+};
+
 const EditHeader: React.FC<EditHeaderProps> = (props) => {
   const Navi = useNavigate();
 
@@ -120,7 +149,7 @@ const EditHeader: React.FC<EditHeaderProps> = (props) => {
         <div className={styles.right}>
           <Space>
             <SaveBtn />
-            <Button type="primary">Publish</Button>
+            <PublishBtn />
           </Space>
         </div>
       </div>
