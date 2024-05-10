@@ -3,13 +3,17 @@ import { message, Input, Button, Space } from "antd";
 import { useDispatch } from "react-redux";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import {
+  ComponentInfoType,
   changeComponentHidden,
   modifyTitle,
+  moveComponent,
   toggleComponentLocked,
 } from "../../../store/componentSlice";
 import { changeSelectedId } from "../../../store/componentSlice";
 import styles from "./Layer.module.scss";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
+import SortableContainer from "../../../components/DragSortable/SortableContainer";
+import SortableItem from "../../../components/DragSortable/SortableItem";
 
 const Layers: FC = () => {
   const { componentList, selectedId } = useGetComponentInfo();
@@ -51,52 +55,62 @@ const Layers: FC = () => {
     return className;
   };
 
+  const listWithId = componentList.map((item) => {
+    return { ...item, id: item.fe_id };
+  });
+
+  const handleDragEnd = (oldIndex: number, newIndex: number) => {
+    dispatch(moveComponent({ oldIndex, newIndex }));
+  };
+
   return (
-    <>
+    <SortableContainer items={listWithId} onDragEnd={handleDragEnd}>
       {componentList.map((c) => {
         const { fe_id, title, isHidden, isLocked } = c;
 
         return (
-          <div key={fe_id} className={styles.wrapper}>
-            <div
-              className={generateClass(fe_id, selectedId)}
-              onClick={() => handleTitleClick(fe_id)}
-            >
-              {changeingTitleId === fe_id ? (
-                <Input
-                  value={title}
-                  onPressEnter={() => setChangingTitleId("")}
-                  onBlur={() => setChangingTitleId("")}
-                  onChange={(e) => handleChange(e, fe_id)}
-                />
-              ) : (
-                title
-              )}
+          <SortableItem key={fe_id} id={fe_id}>
+            <div className={styles.wrapper}>
+              <div
+                className={generateClass(fe_id, selectedId)}
+                onClick={() => handleTitleClick(fe_id)}
+              >
+                {changeingTitleId === fe_id ? (
+                  <Input
+                    value={title}
+                    onPressEnter={() => setChangingTitleId("")}
+                    onBlur={() => setChangingTitleId("")}
+                    onChange={(e) => handleChange(e, fe_id)}
+                  />
+                ) : (
+                  title
+                )}
+              </div>
+              <div className={styles.handler}>
+                <Space>
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isHidden ? styles.btn : ""}
+                    icon={<EyeInvisibleOutlined />}
+                    type={isHidden ? "primary" : "text"}
+                    onClick={() => handleHideChange(fe_id, isHidden)}
+                  />
+                  <Button
+                    size="small"
+                    shape="circle"
+                    className={!isHidden ? styles.btn : ""}
+                    icon={<LockOutlined />}
+                    type={isHidden ? "primary" : "text"}
+                    onClick={() => handleLockChange(fe_id)}
+                  />
+                </Space>
+              </div>
             </div>
-            <div className={styles.handler}>
-              <Space>
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isHidden ? styles.btn : ""}
-                  icon={<EyeInvisibleOutlined />}
-                  type={isHidden ? "primary" : "text"}
-                  onClick={() => handleHideChange(fe_id, isHidden)}
-                />
-                <Button
-                  size="small"
-                  shape="circle"
-                  className={!isHidden ? styles.btn : ""}
-                  icon={<LockOutlined />}
-                  type={isHidden ? "primary" : "text"}
-                  onClick={() => handleLockChange(fe_id)}
-                />
-              </Space>
-            </div>
-          </div>
+          </SortableItem>
         );
       })}
-    </>
+    </SortableContainer>
   );
 };
 

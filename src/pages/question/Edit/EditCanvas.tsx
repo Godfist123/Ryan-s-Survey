@@ -9,10 +9,13 @@ import { MouseEvent } from "react";
 import {
   ComponentInfoType,
   changeSelectedId,
+  moveComponent,
 } from "../../../store/componentSlice";
 import { getComponentConfByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
 import useBindCanvasPress from "../../../hooks/useBindCanvasKeyPress";
+import SortableContainer from "../../../components/DragSortable/SortableContainer";
+import SortableItem from "../../../components/DragSortable/SortableItem";
 interface EditCanvasProps {
   loading: boolean;
 }
@@ -50,6 +53,14 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
     return className;
   };
 
+  const listWithId = componentList.map((item) => {
+    return { ...item, id: item.fe_id };
+  });
+
+  const handleDragEnd = (oldIndex: number, newIndex: number) => {
+    dispatch(moveComponent({ oldIndex, newIndex }));
+  };
+
   if (loading) {
     return (
       <div style={{ textAlign: "center", marginTop: "24px" }}>
@@ -58,36 +69,38 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
     );
   } else {
     return (
-      <div className={styles.canvas}>
-        {componentList
-          .filter((item) => {
-            return item.isHidden !== true;
-          })
-          .map((item) => {
-            const { fe_id } = item;
+      <SortableContainer items={listWithId} onDragEnd={handleDragEnd}>
+        <div className={styles.canvas}>
+          {componentList
+            .filter((item) => {
+              return item.isHidden !== true;
+            })
+            .map((item) => {
+              const { fe_id } = item;
 
-            // const wrapperDefaultClassName = styles["component-wrapper"];
-            // const selectedClassName = styles.selected;
-            // const wrapperClassName = classNames({
-            //   [wrapperDefaultClassName]: true,
-            //   [selectedClassName]: fe_id === selectedId,
-            // });
+              // const wrapperDefaultClassName = styles["component-wrapper"];
+              // const selectedClassName = styles.selected;
+              // const wrapperClassName = classNames({
+              //   [wrapperDefaultClassName]: true,
+              //   [selectedClassName]: fe_id === selectedId,
+              // });
 
-            return (
-              <div
-                key={fe_id}
-                className={generateClass(fe_id, selectedId, item)}
-                onClick={(event) => {
-                  handleClick(event, fe_id);
-                }}
-              >
-                <div className={styles.blockEvents}>
-                  {generateComponent(item)}
-                </div>
-              </div>
-            );
-          })}
-        {/* <div className={styles["component-wrapper"]}>
+              return (
+                <SortableItem key={fe_id} id={fe_id}>
+                  <div
+                    className={generateClass(fe_id, selectedId, item)}
+                    onClick={(event) => {
+                      handleClick(event, fe_id);
+                    }}
+                  >
+                    <div className={styles.blockEvents}>
+                      {generateComponent(item)}
+                    </div>
+                  </div>
+                </SortableItem>
+              );
+            })}
+          {/* <div className={styles["component-wrapper"]}>
           <div className={styles.blockEvents}>
             <QuestionTitle />
           </div>
@@ -97,7 +110,8 @@ const EditCanvas: React.FC<EditCanvasProps> = ({ loading }) => {
             <QuestionInput />
           </div>
         </div> */}
-      </div>
+        </div>
+      </SortableContainer>
     );
   }
 };
