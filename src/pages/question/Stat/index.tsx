@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
 import { Spin, Result, Button } from "antd";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
@@ -6,19 +6,23 @@ import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 import styles from "./index.module.scss";
 import StatHeader from "./StatHeader";
+import ComponentList from "./ComponentList";
 
 interface StatProps {
   // Define your props here
 }
 
 const Stat: React.FC<StatProps> = (props) => {
+  const [selectedComponentId, setSelectedComponentId] = useState("");
+  const [selectedComponentType, setSelectedComponentType] = useState("");
+
   const { loading } = useLoadQuestionData();
   const { title, isPublished } = useGetPageInfo();
   const Navi = useNavigate();
   useTitle(`Statistics - ${title}`);
 
   const generateContent = () => {
-    if (!isPublished) {
+    if (typeof isPublished === "boolean" && !isPublished) {
       return (
         <div style={{ flex: "1" }}>
           <Result
@@ -40,7 +44,13 @@ const Stat: React.FC<StatProps> = (props) => {
     }
     return (
       <>
-        <div className={styles.left}>left</div>
+        <div className={styles.left}>
+          <ComponentList
+            selectedId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
         <div className={styles.main}>mid</div>
         <div className={styles.right}>right</div>
       </>
