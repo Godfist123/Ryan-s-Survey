@@ -5,6 +5,7 @@ import useGetPageInfo from "../../../hooks/useGetPageInfo";
 import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 import styles from "./index.module.scss";
+import StatHeader from "./StatHeader";
 
 interface StatProps {
   // Define your props here
@@ -54,7 +55,9 @@ const Stat: React.FC<StatProps> = (props) => {
 
   return (
     <div className={styles.container}>
-      <div>Header</div>
+      <div>
+        <StatHeader />
+      </div>
       <div className={styles["content-wrapper"]}>
         {loading && LoadingElem}
         {!loading && <div className={styles.content}>{generateContent()}</div>}
