@@ -7,6 +7,8 @@ import { changeSelectedId } from "../../../store/componentSlice";
 import LeftPanel from "./LeftPanel";
 import RightPanel from "./RightPanel";
 import EditHeader from "./EditHeader";
+import { useTitle } from "ahooks";
+import useGetPageInfo from "../../../hooks/useGetPageInfo";
 
 interface EditProps {
   // Define your props here
@@ -18,6 +20,8 @@ const Edit: React.FC<EditProps> = (props) => {
   const clearSelectId = () => {
     dispatch(changeSelectedId(""));
   };
+  const { title } = useGetPageInfo();
+  useTitle(`Edit Survey - ${title}`);
 
   return (
     <div className={styles.container}>

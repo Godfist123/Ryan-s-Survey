@@ -16,11 +16,20 @@ function useLoadQuestionData() {
     return data;
   };
 
-  const { data, loading, error, run } = useRequest(load, { manual: true });
+  const { data, loading, error, run } = useRequest(load, {
+    manual: true,
+  });
 
   useEffect(() => {
     if (!data) return;
-    const { title = "", desc, css, js, componentList = [] } = data;
+    const {
+      title = "",
+      desc,
+      css,
+      js,
+      componentList = [],
+      isPublished = false,
+    } = data;
     let selectedId = "";
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id;
@@ -28,7 +37,7 @@ function useLoadQuestionData() {
     dispatch(
       resetComponents({ componentList, selectedId, copiedComponent: null })
     );
-    dispatch(resetPageInfo({ title, desc, css, js }));
+    dispatch(resetPageInfo({ title, desc, css, js, isPublished }));
   }, [data]);
 
   useEffect(() => {
