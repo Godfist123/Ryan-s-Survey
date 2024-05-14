@@ -7,6 +7,7 @@ import { useTitle } from "ahooks";
 import styles from "./index.module.scss";
 import StatHeader from "./StatHeader";
 import ComponentList from "./ComponentList";
+import PageStat from "./PageStat";
 
 interface StatProps {
   // Define your props here
@@ -51,7 +52,13 @@ const Stat: React.FC<StatProps> = (props) => {
             setSelectedComponentType={setSelectedComponentType}
           />
         </div>
-        <div className={styles.main}>mid</div>
+        <div className={styles.main}>
+          <PageStat
+            selectedId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
         <div className={styles.right}>right</div>
       </>
     );
