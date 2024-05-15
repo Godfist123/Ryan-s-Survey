@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { getQuestionStatListService } from "../../../services/stat";
 import { useRequest } from "ahooks";
 import { useParams } from "react-router-dom";
-import { Spin, Table } from "antd";
+import { Pagination, Spin, Table } from "antd";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
 interface PageStatProps {
@@ -17,16 +17,19 @@ const PageStat: React.FC<PageStatProps> = (props) => {
   const { id = "" } = useParams();
   const [total, setTotal] = useState(0);
   const [list, setList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const { loading } = useRequest(
     async () => {
       const resp = await getQuestionStatListService(id, {
-        page: 1,
-        pageSize: 10,
+        page,
+        pageSize,
       });
       return resp;
     },
     {
+      refreshDeps: [id, page, pageSize],
       onSuccess: (resp) => {
         const { total, list = [] } = resp;
         setTotal(total);
@@ -63,7 +66,25 @@ const PageStat: React.FC<PageStatProps> = (props) => {
   });
 
   const TableElem = (
-    <Table columns={columns} dataSource={dataSource} pagination={false}></Table>
+    <>
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={false}
+      ></Table>
+      <div style={{ textAlign: "center", marginTop: "18px" }}>
+        <Pagination
+          total={total}
+          pageSize={pageSize}
+          current={page}
+          onChange={(page) => setPage(page)}
+          onShowSizeChange={(page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize);
+          }}
+        />
+      </div>
+    </>
   );
 
   return (
