@@ -10,6 +10,10 @@ export type QuestionCheckboxPropsType = {
   list?: optionType[];
   onChange?: (newProps: QuestionCheckboxPropsType) => void;
   disabled?: boolean;
+  stat?: Array<{
+    name: string;
+    count: number;
+  }>;
 };
 
 export const QuestionCheckboxDefaultProps = {

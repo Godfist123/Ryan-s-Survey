@@ -8,6 +8,7 @@ import styles from "./index.module.scss";
 import StatHeader from "./StatHeader";
 import ComponentList from "./ComponentList";
 import PageStat from "./PageStat";
+import ChartStat from "./ChartStat";
 
 interface StatProps {
   // Define your props here
@@ -59,7 +60,12 @@ const Stat: React.FC<StatProps> = (props) => {
             setSelectedComponentType={setSelectedComponentType}
           />
         </div>
-        <div className={styles.right}>right</div>
+        <div className={styles.right}>
+          <ChartStat
+            selectedId={selectedComponentId}
+            selectedComponentType={selectedComponentType}
+          />
+        </div>
       </>
     );
   };

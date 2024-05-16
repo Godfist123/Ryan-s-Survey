@@ -10,6 +10,10 @@ export type QuestionRadioPropsType = {
   value?: string;
   onChange?: (newProps: QuestionRadioPropsType) => void;
   disabled?: boolean;
+  stat?: Array<{
+    name: string;
+    count: number;
+  }>;
 };
 
 export const QuestionRadioDefaultProps = {

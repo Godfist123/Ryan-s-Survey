@@ -29,6 +29,7 @@ export type ComponentConfType = {
   PropComponent: FC<ComponentPropsType>;
   Component: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
+  StatComponent?: FC<ComponentPropsType>;
 };
 
 const componentConfList: ComponentConfType[] = [
