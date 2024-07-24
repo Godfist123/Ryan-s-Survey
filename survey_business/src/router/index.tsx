@@ -12,7 +12,6 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import { createBrowserRouter } from "react-router-dom";
-import path from "path";
 
 const router = createBrowserRouter([
   {
