@@ -32,7 +32,6 @@ const QuestionRadio: React.FC<QuestionRadioProps> = ({ fe_id, props }) => {
               <label>
                 <input
                   type="radio"
-                  id={fe_id}
                   name={fe_id}
                   value={option.value}
                   defaultChecked={value === option.value}
