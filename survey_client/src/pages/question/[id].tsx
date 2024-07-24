@@ -1,9 +1,7 @@
-import QuestionInput from "@/components/QuestionComponents/QuestionInput";
-import QuestionRadio from "@/components/QuestionComponents/QuestionRadio";
-import Head from "next/head";
-import styles from "./question.module.scss";
+import styles from "@/styles/Question.module.scss";
 import { getQuestionById } from "@/service/question";
 import PageWrapper from "@/components/PageWrapper";
+import { getComponent } from "@/components/QuestionComponents";
 
 interface QuestionProps {
   errno: number;
@@ -40,6 +38,7 @@ export default function Question(props: QuestionProps) {
     isPublished,
     componentList,
   } = data || {};
+  console.log(data);
   //already deleted
   if (isDeleted) {
     return (
@@ -59,27 +58,27 @@ export default function Question(props: QuestionProps) {
     );
   }
 
+  const ComponentListElem = (
+    <>
+      {componentList?.map((c) => {
+        const ComponentElem = getComponent(c);
+        return (
+          <div key={c.fe_id} className={styles.componentWrapper}>
+            {ComponentElem}
+          </div>
+        );
+      })}
+    </>
+  );
+
   return (
     <PageWrapper title={title} desc={desc}>
       <form method="post" action="/api/answer">
         <input type="hidden" name="questionId" value={id} />
-        <QuestionInput
-          fe_id="c1"
-          props={{ title: "Question", placeholder: "test" }}
-        />
-        <QuestionRadio
-          fe_id="c2"
-          props={{
-            title: "Question",
-            options: [
-              { value: "male", text: "male" },
-              { value: "female", text: "female" },
-            ],
-            value: "male",
-            isVertical: false,
-          }}
-        />
-        <button type="submit">Submit</button>
+        {ComponentListElem}
+        <div className={styles.submitBtnContainer}>
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </PageWrapper>
   );
