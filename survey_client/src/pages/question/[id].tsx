@@ -17,21 +17,21 @@ export default function Question(props: QuestionProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <form>
+        <form method="post" action="/api/answer">
           <input type="hidden" name="questionId" value={props.id} />
           <QuestionInput
-            fe_id="question"
+            fe_id="c1"
             props={{ title: "Question", placeholder: "test" }}
           />
           <QuestionRadio
-            fe_id="question"
+            fe_id="c2"
             props={{
               title: "Question",
               options: [
-                { value: "1", text: "Option 1" },
-                { value: "2", text: "Option 2" },
+                { value: "male", text: "male" },
+                { value: "female", text: "female" },
               ],
-              value: "1",
+              value: "male",
               isVertical: false,
             }}
           />

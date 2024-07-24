@@ -15,5 +15,11 @@
     ],
     "cSpell.enableFiletypes": [
         "typescript"
-    ]
+    ],
+    "testing.openTesting": "neverOpen",
+    "jest.outputConfig": {
+        "revealOn": "run",
+        "revealWithFocus": "none",
+        "clearOnRun": "none"
+    }
 }
