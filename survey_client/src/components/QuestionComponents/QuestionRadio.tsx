@@ -20,7 +20,7 @@ const QuestionRadio: React.FC<QuestionRadioProps> = ({ fe_id, props }) => {
     <div>
       <p>{title}</p>
       <ul className={styles.list}>
-        {options.map((option, index) => {
+        {options.map((option) => {
           let liClassName = "";
           if (isVertical) {
             liClassName = styles.verticalItem;

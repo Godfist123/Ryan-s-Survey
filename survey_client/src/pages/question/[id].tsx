@@ -28,7 +28,7 @@ export default function Question(props: QuestionProps) {
             props={{
               title: "Question",
               options: [
-                { value: "mal", text: "male" },
+                { value: "male", text: "male" },
                 { value: "female", text: "female" },
               ],
               value: "male",
