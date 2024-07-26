@@ -1,7 +1,9 @@
+import QuestionCheckbox from "./QuestionCheckbox";
 import QuestionInfo from "./QuestionInfo";
 import QuestionInput from "./QuestionInput";
 import QuestionParagraph from "./QuestionParagraph";
 import QuestionRadio from "./QuestionRadio";
+import QuestionTextarea from "./QuestionTextarea";
 import QuestionTitle from "./QuestionTitle";
 
 type ComponentInfoType = {
@@ -36,6 +38,14 @@ export const getComponent = (comp: ComponentInfoType) => {
 
   if (type === "QuestionInfo") {
     return <QuestionInfo {...props} />;
+  }
+
+  if (type === "TextArea") {
+    return <QuestionTextarea fe_id={fe_id} props={props} />;
+  }
+
+  if (type === "QuestionCheckbox") {
+    return <QuestionCheckbox fe_id={fe_id} props={props} />;
   }
   return null;
 };
