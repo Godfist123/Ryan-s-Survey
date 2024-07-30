@@ -6,10 +6,11 @@ import { InjectModel } from '@nestjs/mongoose';
 export class QuestionService {
   constructor(@InjectModel(Question.name) private questionModel) {}
 
-  async create() {
+  async create(username: string) {
     const createdQuestion = new this.questionModel({
       title: 'title' + Date.now(),
       desc: 'desc',
+      author: username,
     });
     return await createdQuestion.save();
   }

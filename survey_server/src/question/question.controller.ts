@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  Request,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { Question } from './schemas/question.schema';
@@ -22,8 +23,9 @@ export class QuestionController {
   }
 
   @Post()
-  create() {
-    return this.questionService.create();
+  create(@Request() req) {
+    const { username } = req.user;
+    return this.questionService.create(username);
   }
 
   @Patch(':id')
