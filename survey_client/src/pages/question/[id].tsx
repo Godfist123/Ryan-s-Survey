@@ -6,7 +6,7 @@ import { getComponent } from "@/components/QuestionComponents";
 interface QuestionProps {
   errno: number;
   data?: {
-    id: string;
+    _id: string;
     title: string;
     desc?: string;
     js?: string;
@@ -31,7 +31,7 @@ export default function Question(props: QuestionProps) {
   }
 
   const {
-    id,
+    _id,
     title = "",
     desc = "",
     isDeleted,
@@ -74,7 +74,7 @@ export default function Question(props: QuestionProps) {
   return (
     <PageWrapper title={title} desc={desc}>
       <form method="post" action="/api/answer">
-        <input type="hidden" name="questionId" value={id} />
+        <input type="hidden" name="questionId" value={_id} />
         {ComponentListElem}
         <div className={styles.submitBtnContainer}>
           <button type="submit">Submit</button>

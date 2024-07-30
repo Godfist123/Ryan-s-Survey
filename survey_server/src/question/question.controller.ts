@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { Question } from './schemas/question.schema';
+import { Public } from 'src/auth/decorator/public.decorator';
 
 @Controller('question')
 export class QuestionController {
@@ -47,6 +48,7 @@ export class QuestionController {
     return this.questionService.deleteMany(ids, username);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.questionService.findOne(id);
