@@ -29,37 +29,58 @@ export class QuestionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() question: Question) {
-    return this.questionService.update(id, question);
+  update(@Param('id') id: string, @Body() question: Question, @Request() req) {
+    const { username } = req.user;
+    return this.questionService.update(id, question, username);
   }
 
-  @Get()
+  @Delete(':id')
+  deleteOne(@Param('id') id: string, @Request() req) {
+    const { username } = req.user;
+    return this.questionService.delete(id, username);
+  }
+
+  @Delete()
+  deleteMany(@Body('ids') body: any, @Request() req) {
+    const { username } = req.user;
+    const { ids = [] } = body;
+    return this.questionService.deleteMany(ids, username);
+  }
+
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.questionService.findOne(id);
   }
 
-  @Get('list')
+  @Get()
   async findAllList(
     @Query('keyword') keyword: string,
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
+    @Query('isDeleted') isDeleted: boolean = false,
+    @Query('isStar') isStar: boolean = false,
+    @Request() req,
   ) {
-    const list = await this.questionService.findAllList(
+    const { username } = req.user;
+    const list = await this.questionService.findAllList({
       keyword,
       page,
       pageSize,
-    );
+      isDeleted,
+      isStar,
+      author: username,
+    });
 
-    const count = await this.questionService.countAll(keyword);
+    const count = await this.questionService.countAll({
+      keyword,
+      isDeleted,
+      isStar,
+      author: username,
+    });
 
     return {
       list,
       count,
     };
-  }
-
-  @Delete(':id')
-  deleteOne(@Param('id') id: string) {
-    return this.questionService.delete(id);
   }
 }
