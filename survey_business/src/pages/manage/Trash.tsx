@@ -13,8 +13,7 @@ import {
   Spin,
   message,
 } from "antd";
-import { title } from "process";
-import { render } from "@testing-library/react";
+
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 import { useRequest } from "ahooks";
@@ -31,7 +30,11 @@ interface TrashProps {
 }
 
 const Trash: React.FC<TrashProps> = (props) => {
-  const { data = {}, loading, refresh } = useLoadQuestionListData();
+  const {
+    data = {},
+    loading,
+    refresh,
+  } = useLoadQuestionListData({ isDeleted: true });
   const { list = {}, total = 0 } = data;
 
   //record selected ids
@@ -41,6 +44,7 @@ const Trash: React.FC<TrashProps> = (props) => {
   const { run: recover } = useRequest(
     async () => {
       for await (const item of selectedIds) {
+        console.log("item", item);
         await updateQuestionService(item, { isDeleted: false });
       }
     },

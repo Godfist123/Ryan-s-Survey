@@ -12,7 +12,7 @@ interface StarProps {
 }
 
 const Star: React.FC<StarProps> = (props) => {
-  const { data = {}, loading } = useLoadQuestionListData();
+  const { data = {}, loading } = useLoadQuestionListData({ isStar: true });
   const { list = {}, total = 0 } = data;
   return (
     <div>

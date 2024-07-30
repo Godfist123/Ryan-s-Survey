@@ -10,6 +10,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor()); // This sets the global interceptor for all routes in the application.
 
   app.useGlobalFilters(new HttpExceptionFilter()); // This sets the global filter for all routes in the application.
+
+  app.enableCors(); // This enables CORS for the application.
   await app.listen(3005);
 }
 bootstrap();

@@ -3,12 +3,13 @@ import { message } from "antd";
 import { getToken } from "../utils/user-token";
 
 const instance = axios.create({
+  baseURL: "http://localhost:3005/",
   timeout: 10 * 1000,
 });
 
 instance.interceptors.request.use(
   (config) => {
-    config.headers["Authorization"] = `Bearer ${getToken()}`; // JWT 的固定格式
+    config.headers["Authorization"] = `Bearer ${getToken()}`; // JWT
     return config;
   },
   (error) => Promise.reject(error)

@@ -39,7 +39,7 @@ const ManageLayout: React.FC<ManageLayoutProps> = (props) => {
   } = useRequest(createQuestionService, {
     manual: true,
     onSuccess(resp) {
-      navi(`/question/edit/${resp.id}`);
+      navi(`/question/edit/${resp.id || resp._id}`);
       message.success("Creation Successful");
     },
   });

@@ -4,7 +4,6 @@ import { Button, Checkbox, Form, Input, Typography, message } from "antd";
 import { Space } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import { log } from "console";
 import { useRequest } from "ahooks";
 import { loginService } from "../services/user";
 import { setToken } from "../utils/user-token";

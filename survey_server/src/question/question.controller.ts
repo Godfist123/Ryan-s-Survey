@@ -41,7 +41,7 @@ export class QuestionController {
   }
 
   @Delete()
-  deleteMany(@Body('ids') body: any, @Request() req) {
+  deleteMany(@Body() body: any, @Request() req) {
     const { username } = req.user;
     const { ids = [] } = body;
     return this.questionService.deleteMany(ids, username);
@@ -58,7 +58,7 @@ export class QuestionController {
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
     @Query('isDeleted') isDeleted: boolean = false,
-    @Query('isStar') isStar: boolean = false,
+    @Query('isStar') isStar: boolean,
     @Request() req,
   ) {
     const { username } = req.user;
@@ -82,5 +82,11 @@ export class QuestionController {
       list,
       count,
     };
+  }
+
+  @Post('duplicate/:id')
+  duplicate(@Param('id') id: string, @Request() req) {
+    const { username } = req.user;
+    return this.questionService.duplicate(id, username);
   }
 }

@@ -46,7 +46,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
       manual: true,
       onSuccess(resp) {
         message.success("Copy Successful");
-        Navi(`/question/edit/${resp.id}`);
+        Navi(`/question/edit/${resp.id || resp._id}`);
       },
     }
   );

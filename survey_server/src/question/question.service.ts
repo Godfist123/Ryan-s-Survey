@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Question } from './schemas/question.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { nanoid } from 'nanoid';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class QuestionService {
@@ -79,7 +80,25 @@ export class QuestionService {
       const reg = new RegExp(keyword, 'i');
       whereOptions.title = { $regex: reg }; //%title%
     }
-    console.log('whereOptions', whereOptions);
     return await this.questionModel.countDocuments(whereOptions);
+  }
+
+  async duplicate(id: string, author: string) {
+    const question = await this.questionModel.findById(id);
+    const newQuestion = new this.questionModel({
+      ...question.toObject(),
+      _id: new mongoose.Types.ObjectId(),
+      title: question.title + ' copy',
+      author,
+      isPublished: false,
+      isStar: false,
+      componentList: question.componentList.map((item) => {
+        return {
+          ...item,
+          fe_id: nanoid(),
+        };
+      }),
+    });
+    return await newQuestion.save();
   }
 }

@@ -33,6 +33,7 @@ export async function updateQuestionService(
   opt: { [key: string]: any }
 ): Promise<ResDataType> {
   const url = `/api/question/${id}`;
+  console.log("opt", opt);
   const data = (await axios.patch(url, opt)) as ResDataType;
   return data;
 }

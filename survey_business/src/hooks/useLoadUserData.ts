@@ -4,10 +4,13 @@ import { useRequest } from "ahooks";
 import { getUserInfoService } from "../services/user";
 import { useDispatch } from "react-redux";
 import { login } from "../store/userSlice";
+import { getToken } from "../utils/user-token";
 
 const useLoadUserData = () => {
   const dispatch = useDispatch();
   const [waitingUserData, setWaitingUserData] = useState(true);
+  const token = getToken();
+
   const { run } = useRequest(getUserInfoService, {
     manual: true,
     onSuccess(resp) {
@@ -25,7 +28,7 @@ const useLoadUserData = () => {
       return;
     }
     run();
-  }, [username]);
+  }, [username, token]);
   return { waitingUserData };
 };
 
