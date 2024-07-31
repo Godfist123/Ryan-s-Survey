@@ -33,6 +33,7 @@ const PageStat: React.FC<PageStatProps> = (props) => {
       onSuccess: (resp) => {
         const { total, list = [] } = resp;
         setTotal(total);
+        console.log("list", list);
         setList(list);
       },
     }

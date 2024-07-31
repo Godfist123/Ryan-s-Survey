@@ -128,7 +128,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               onClick={() => {
                 Navi(`/question/stat/${_id}`);
               }}
-              disabled={isPublished ? true : false}
+              disabled={isPublished ? false : true}
             >
               Statistics
             </Button>
