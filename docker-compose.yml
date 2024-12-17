@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
+    image: godfist123/backend:latest
+
     ports:
       - "3005:3005"
     volumes:
@@ -17,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
+    image: godfist123/frontend-client:latest
+
     ports:
       - "3000:3000"
     volumes:
@@ -27,6 +31,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.business
+    image: godfist123/frontend-business:latest
     ports:
       - "8000:80"
     volumes:
