@@ -1,27 +1,27 @@
 {
-    "cSpell.words": [
-        "clonedeep",
-        "craco",
-        "downarrow",
-        "immer",
-        "Navi",
-        "nestdb",
-        "pageinfo",
-        "Popconfirm",
-        "qrcode",
-        "scorll",
-        "setloading",
-        "undoable",
-        "uparrow"
-    ],
-    "cSpell.enableFiletypes": [
-        "typescript"
-    ],
-    "testing.openTesting": "neverOpen",
-    "jest.outputConfig": {
-        "revealOn": "run",
-        "revealWithFocus": "none",
-        "clearOnRun": "none"
-    },
-    "testing.automaticallyOpenTestResults": "neverOpen"
+  "cSpell.words": [
+    "clonedeep",
+    "craco",
+    "downarrow",
+    "immer",
+    "Navi",
+    "nestdb",
+    "pageinfo",
+    "Popconfirm",
+    "qrcode",
+    "scorll",
+    "setloading",
+    "undoable",
+    "uparrow"
+  ],
+  "cSpell.enableFiletypes": ["typescript"],
+  "testing.openTesting": "neverOpen",
+  "jest.outputConfig": {
+    "revealOn": "run",
+    "revealWithFocus": "none",
+    "clearOnRun": "none"
+  },
+  "testing.automaticallyOpenTestResults": "neverOpen",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }
