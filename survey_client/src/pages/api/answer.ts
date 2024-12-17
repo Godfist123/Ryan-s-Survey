@@ -25,16 +25,16 @@ export default async function handler(
     res.status(200).json({ errno: -1, msg: "method not allowed" });
   }
   const answerInfo = genAnswerInfo(req.body);
-  console.log("answerInfo", answerInfo);
+
   try {
     const resData = await postAnswer(answerInfo);
     if (resData.errno === 0) {
-      res.redirect("/Success");
+      res.redirect("/nextjs/Success");
     } else {
-      res.redirect("/Fail");
+      res.redirect("/nextjs/Fail");
     }
   } catch (e) {
-    res.redirect("/Fail");
+    res.redirect("/nextjs/Fail");
   }
   //   res.status(200).json({ errno: 0, msg: "success" });
 }

@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -18,9 +16,10 @@ import { Public } from 'src/auth/decorator/public.decorator';
 @Controller('question')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
+  @Public()
   @Get('test')
   getTest() {
-    throw new HttpException('test error', HttpStatus.BAD_REQUEST);
+    return 'test';
   }
 
   @Post()

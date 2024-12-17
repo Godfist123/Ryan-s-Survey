@@ -1,0 +1,54 @@
+name: CI - Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main  # Trigger CI pipeline when code is pushed to the main branch
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set Up Docker Buildx for Multi-Platform Builds
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 4: Build and Push Frontend1 Docker Image
+      - name: Build and Push survey_business
+        uses: docker/build-push-action@v4
+        with:
+          context: ./survey_business
+          file: ./Dockerfile.business
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/survey_business:latest
+
+      # Step 5: Build and Push survey_client Docker Image
+      - name: Build and Push survey_client
+        uses: docker/build-push-action@v4
+        with:
+          context: ./survey_client
+          file: ./Dockerfile.client
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/survey_client:latest
+
+      # Step 6: Build and Push Backend Docker Image
+      - name: Build and Push Backend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./survey_server
+          file: ./Dockerfile.backend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/survey_server:latest

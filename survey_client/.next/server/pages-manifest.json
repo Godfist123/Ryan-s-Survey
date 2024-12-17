@@ -1,10 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/question/[id]": "pages/question/[id].js",
-  "/Fail": "pages/Fail.js",
-  "/Success": "pages/Success.js",
-  "/api/answer": "pages/api/answer.js"
-}
+{"/_app":"pages/_app.js","/_document":"pages/_document.js","/Fail":"pages/Fail.html","/Success":"pages/Success.html","/api/answer":"pages/api/answer.js","/api/hello":"pages/api/hello.js","/":"pages/index.html","/_error":"pages/_error.js","/question/[id]":"pages/question/[id].js","/404":"pages/404.html"}

@@ -36,7 +36,7 @@ const StatHeader: React.FC<StatHeaderProps> = (props) => {
 
   const generateLinkAndQRCode = () => {
     if (!isPublished) return null;
-    const url = `http://localhost:3000/question/${id}`;
+    const url = `http://3.27.214.129/nextjs/question/${id}`;
     const QRCodeElem = (
       <div style={{ textAlign: "center" }}>
         <QRCode value={url} size={100}></QRCode>

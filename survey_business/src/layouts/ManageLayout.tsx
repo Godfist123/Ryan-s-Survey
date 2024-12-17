@@ -34,7 +34,7 @@ const ManageLayout: React.FC<ManageLayoutProps> = (props) => {
 
   const {
     loading,
-    error,
+
     run: handleCreateClick,
   } = useRequest(createQuestionService, {
     manual: true,
@@ -47,7 +47,6 @@ const ManageLayout: React.FC<ManageLayoutProps> = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <p>ManageLayout left</p>
         <Flex gap="small" wrap="wrap">
           <Button
             type={"primary"}

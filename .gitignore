@@ -3,6 +3,8 @@
 # dependencies
 survey_business/node_modules/
 survey_client/node_modules/
+survey_client/.next
+
 /.pnp
 .pnp.js
 

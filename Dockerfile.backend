@@ -1,0 +1,18 @@
+# Stage 1: Build Stage
+FROM node:18-alpine AS builder
+WORKDIR /usr/src/app
+
+COPY survey_server/package*.json ./
+RUN npm install
+COPY survey_server/ .
+RUN npm run build
+
+# Stage 2: Production Stage
+FROM node:18-alpine
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+
+EXPOSE 3005
+CMD ["node", "dist/main"]
